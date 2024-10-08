@@ -1,0 +1,53 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+}
+
+.banner {
+    background-image: url('../public/assets/gallery1.jpg');
+    background-size: cover;
+}
+
+.top-grad {
+    background-image: black;
+}
+
+/* hover:nav-hover {
+    color: #24cf1e;
+} */
+
+/* FONTS */
+.lora {
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+.bona-nova {
+    font-family: "Bona Nova SC", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.deja-vu {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.prata {
+    font-family: "Prata", serif;
+    font-weight: 550;
+    font-style: normal;
+}
+
+.banner-image {
+    background-image: url('../public/assets/gallery1.jpg')
+}
+
+.trans {
+    transition: 0.15s;
+}
