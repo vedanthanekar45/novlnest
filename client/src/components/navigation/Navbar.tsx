@@ -10,7 +10,7 @@ import SignInModal from '../authentication/signin.tsx';
 export default function Navbar({className}: ClassNameProp) {
     const [opa, setOpa] = useState(65)
     const handleFocus = () => {
-        setOpa(0);
+        setOpa(100);
     }
     const handleBlur = () => {
         setOpa(65);
@@ -35,7 +35,7 @@ export default function Navbar({className}: ClassNameProp) {
                 <a href="#"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
                 ml-16 mt-[30px] text-[17px] trans" text="Journal" /></a>
                 <SearchBar className={`rounded-full text-[15px] ml-14 relative 
-                mt-[20px] h-[35px] pl-4 w-[230px] opacity-${opa} focus:outline-none `} 
+                mt-[20px] h-[35px] pl-4 w-[230px] opacity-${opa} `} 
                 onBlur={handleBlur} onFocus={handleFocus}/>
             </div>
             <SignInModal isOpen={isModalOpen} onClose={toggleModal} />
