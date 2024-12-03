@@ -39,8 +39,11 @@ export default function Footer () {
                 <span>•</span>
                 <a href="#"><h3 className="mx-4 hover:underline ">Contact</h3></a>
             </div>
-            <footer className="bg-[#0f0f0f] mt-2 text-white py-4 w-full text-center">
+            {/* <footer className="bg-[#0f0f0f] mt-2 text-white py-4 w-full text-center">
                 <p>Copyright &copy; {new Date().getFullYear()} NovlNest. All rights reserved.</p>
+            </footer> */}
+            <footer className="bg-[#0f0f0f] mt-2 text-white py-4 w-full text-center">
+                <p>Powered by <a href="https://books.google.com" className="hover:underline">Google Books</a></p>
             </footer>
         </>
     )

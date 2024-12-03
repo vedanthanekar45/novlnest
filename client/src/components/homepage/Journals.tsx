@@ -8,7 +8,7 @@ export default function Journals () {
                             <img src="/public/assets/gallery6.jpg" />
                         </div>
                         <div>
-                            <h2 className="prata text-3xl align-middle text-white">
+                            <h2 className="prata text-3xl align-middle text-white hover:underline">
                                 Leave Hogwarts Behind for these 9 iconic alternatives
                             </h2>
                             <div className="absolute left-0 bottom-0 h-0.5 w-full bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
@@ -22,7 +22,7 @@ export default function Journals () {
                             <img src="/public/assets/gallery2.jpg" />
                         </div>
                         <div>
-                            <h2 className="prata text-3xl align-middle text-white">
+                            <h2 className="prata text-3xl align-middle text-white hover:underline">
                             Mythology Comes Alive in This Soaring Tale of Gods and Monsters
                             </h2>
                             <div className="absolute left-0 bottom-0 h-0.5 w-full bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
@@ -36,7 +36,7 @@ export default function Journals () {
                             <img src="/public/assets/gallery3.jpg" />
                         </div>
                         <div>
-                            <h2 className="prata text-3xl align-middle text-white">
+                            <h2 className="prata text-3xl align-middle text-white hover:underline">
                             Plunge into Madness and Malice with Unmissable Thriller
                             </h2>
                             <div className="absolute left-0 bottom-0 h-0.5 w-full bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
