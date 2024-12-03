@@ -22,6 +22,7 @@ export default function Navbar({className}: ClassNameProp) {
         setModalOpen(!isModalOpen);
     };
 
+
     return (
         <>
             <div className={className}>
