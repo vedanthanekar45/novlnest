@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import *
+from django.views.generic import TemplateView
+from django.urls import path, re_path
+from django.contrib.staticfiles.views import serve
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", client, name="client"),
-    
+    re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

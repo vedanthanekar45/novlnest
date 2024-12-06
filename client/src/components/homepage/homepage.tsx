@@ -7,8 +7,10 @@ import Welcome from "./Welcome";
 import Genres from "./Genres"
 import Footer from "./Footer"
 import Journals from "./Journals";
-// import Slider from "./Slider";
-// import { categorylist } from "../../assets/categories";
+import bookcover11 from "/assets/tpodg.jpg"
+import bookcover12 from "/assets/demons.jpg"
+import bookcover21 from "/assets/ttbp.jpg"
+import bookcover22 from "/assets/1984.jpg"
 
 export default function Homepage() {
     return(
@@ -17,8 +19,8 @@ export default function Homepage() {
                 <Navbar className="flex absolute" /> 
                 <Welcome />
                 <Save 
-                    bookcover1="/public/assets/tpodg.jpg"
-                    bookcover2="/public/assets/demons.jpg"
+                    bookcover1={bookcover11}
+                    bookcover2={bookcover12}
                     title="Browse your favourite literary works"
                     info="Dive into a vast collection of books, from timeless classics to modern masterpieces.
                     Whether you're looking for your next great read or revisiting old favorites, NovlNest makes 
@@ -26,8 +28,8 @@ export default function Homepage() {
                     inverted={true}
                 />
                 <Save 
-                    bookcover1="/public/assets/ttbp.jpg"
-                    bookcover2="/public/assets/1984.jpg"
+                    bookcover1={bookcover21}
+                    bookcover2={bookcover22}
                     title="Keep track of what you're reading"
                     info="Effortlessly log and save every book, article, or paper you read. Whether you’re a 
                     casual reader or a bibliophile, keep track of your literary journey, share your thoughts, 

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +56,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            
+            BASE_DIR / 'static' /'client' 
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -119,10 +118,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/server/novlnest/static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static','client'),
+    BASE_DIR / 'static' / 'client',
+    BASE_DIR / 'static' / 'client' / 'assets',
 ]
 
 # Default primary key field type
