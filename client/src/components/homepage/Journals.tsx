@@ -1,3 +1,7 @@
+import pic1 from "/public/assets/gallery6.jpg"
+import pic2 from "/public/assets/gallery2.jpg"
+import pic3 from "/public/assets/gallery3.jpg"
+
 export default function Journals () {
     return (
         <div>
@@ -5,7 +9,7 @@ export default function Journals () {
                 <a href="#">
                     <div className="w-[400px] h-[400px] mx-8">
                         <div className="h-[200px] object-cover overflow-hidden">
-                            <img src="/public/assets/gallery6.jpg" />
+                            <img src={pic1} />
                         </div>
                         <div>
                             <h2 className="prata text-3xl align-middle text-white hover:underline">
@@ -19,7 +23,7 @@ export default function Journals () {
                 <a href="#">
                     <div className="w-[400px] h-[400px] mx-8">
                         <div className="h-[200px] object-cover">
-                            <img src="/public/assets/gallery2.jpg" />
+                            <img src={pic2} />
                         </div>
                         <div>
                             <h2 className="prata text-3xl align-middle text-white hover:underline">
@@ -33,7 +37,7 @@ export default function Journals () {
                 <a href="#">
                     <div className="w-[400px] h-[400px] mx-8">
                         <div className="h-[200px] object-cover">
-                            <img src="/public/assets/gallery3.jpg" />
+                            <img src={pic3} />
                         </div>
                         <div>
                             <h2 className="prata text-3xl align-middle text-white hover:underline">

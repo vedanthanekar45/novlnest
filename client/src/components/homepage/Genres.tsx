@@ -1,8 +1,18 @@
-// {categories.map((category, index) => (
-//     <Category key={index} image={category.image} title={category.title} link={category.link}/>
-// ))}
-
 import {Category} from "./Category"
+// import {categorylist} from '../../assets/categories.ts'
+import artimage from "../../../public/assets/categoryPics/art.jpg"
+import bioimage from "../../../public/assets/categoryPics/biography.jpg"
+import childimage from "../../../public/assets/categoryPics/childrens.jpg"
+import classimage from "../../../public/assets/categoryPics/classics.jpg"
+import fantimage from "../../../public/assets/categoryPics/fantasy.jpg"
+import histimage from "../../../public/assets/categoryPics/history.jpg"
+import horrorimage from "../../../public/assets/categoryPics/horror.jpg"
+import mystimage from "../../../public/assets/categoryPics/mystery.jpg"
+import nfimage from "../../../public/assets/categoryPics/nonfiction.jpg"
+import poetryimage from "../../../public/assets/categoryPics/poetry.jpg"
+import sfimage from "../../../public/assets/categoryPics/scifi.jpg"
+import shimage from "../../../public/assets/categoryPics/selfhelp.jpg"
+
 
 export default function Genres () {
     return (
@@ -14,22 +24,22 @@ export default function Genres () {
                 <div className="absolute left-0 bottom-0 h-0.5 w-full bg-green-700 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 </div>
                 <div className="flex">
-                    <a href="#"><Category image="/assets/categoryPics/art.jpg" title="ART"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/biography.jpg" title="BIOGRAPHY"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/childrens.jpg" title="CHILDREN'S"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/classics.jpg" title="CLASSICS"/></a>
+                    <a href="#"><Category image={artimage} title="ART"/></a>
+                    <a href="#"><Category image={bioimage} title="BIOGRAPHY"/></a>
+                    <a href="#"><Category image={childimage} title="CHILDREN'S"/></a>
+                    <a href="#"><Category image={classimage} title="CLASSICS"/></a>
                 </div>
                 <div className="flex">
-                    <a href="#"><Category image="/assets/categoryPics/fantasy.jpg" title="FANTASY"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/history.jpg" title="HISTORY"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/horror.jpg" title="HORROR"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/mystery.jpg" title="MYSTERY"/></a>
+                    <a href="#"><Category image={fantimage} title="FANTASY"/></a>
+                    <a href="#"><Category image={histimage} title="HISTORY"/></a>
+                    <a href="#"><Category image={horrorimage} title="HORROR"/></a>
+                    <a href="#"><Category image={mystimage} title="MYSTERY"/></a>
                 </div>
                 <div className="flex">
-                    <a href="#"><Category image="/assets/categoryPics/nonfiction.jpg" title="NON-FICTION"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/poetry.jpg" title="POETRY"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/scifi.jpg" title="SCIENCE-FICTION"/></a>
-                    <a href="#"><Category image="/assets/categoryPics/selfhelp.jpg" title="SELF-HELP"/></a>
+                    <a href="#"><Category image={nfimage} title="NON-FICTION"/></a>
+                    <a href="#"><Category image={poetryimage} title="POETRY"/></a>
+                    <a href="#"><Category image={sfimage} title="SCIENCE-FICTION"/></a>
+                    <a href="#"><Category image={shimage} title="SELF-HELP"/></a>
                 </div>
         </div>
     )
