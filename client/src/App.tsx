@@ -1,12 +1,18 @@
 import './App.css'
-import Homepage from './components/homepage/homepage'
+import GenrePage from './pages/genres'
+import Homepage from './pages/homepage'
+import {Routes, Route} from "react-router-dom"
 
 function App() {
 
   return (
-    <>
-      <Homepage />
-    </>
+    <div>
+      <Routes>
+        <Route path='/' element={<Homepage />} />
+        <Route path='/genre' element={<GenrePage />} />
+      </Routes>
+      {/* <Homepage /> */}
+    </div>
   )
 }
 
