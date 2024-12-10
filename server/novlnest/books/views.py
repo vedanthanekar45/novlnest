@@ -6,6 +6,9 @@ import requests
 
 def search_books (request):
     query = request.GET.get('q', '')
+    if not query:
+        return JsonResponse({"error": "No query provided"}, status=400)
+    
     url = f"https://openlibrary.org/search.json?q={query}"
     response = requests.get(url)
     

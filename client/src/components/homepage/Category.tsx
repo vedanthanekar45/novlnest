@@ -5,7 +5,7 @@ export interface categoryProp {
 
 export function Category ({image, title}: categoryProp) {
     return (
-            <div className="relative w-[250px] h-[300px] object-cover mt-8 group ml-16 mb-8">
+            <div className="relative w-[250px] h-[300px] object-cover mt-4 group ml-12 mb-8">
             <img
             src={image}
             className="w-full h-full object-cover transition duration-300 ease-in-out group-hover:brightness-50"
