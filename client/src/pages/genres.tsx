@@ -2,8 +2,8 @@ import Navbar from "../components/navigation/Navbar";
 import Banner from "../components/homepage/Banner";
 import Title from "../components/genre/title";
 import GenreInfo from "../components/genre/genreInfo";
-import Genres from "../components/homepage/Genres";
 import Footer from "../components/homepage/Footer";
+import ExploreBooks from "../components/genre/ExploreBooks";
 
 export default function GenrePage() {
     return (
@@ -33,7 +33,7 @@ export default function GenrePage() {
                 </h2>
                 <div className="absolute left-0 bottom-0 h-0.5 w-full bg-green-700 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></div> */}
             </div>
-            <Genres />
+            <ExploreBooks />
             <Footer />
         </div>
     )
