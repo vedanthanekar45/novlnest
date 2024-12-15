@@ -21,10 +21,18 @@ from django.urls import path, re_path, include
 from django.contrib.staticfiles.views import serve
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 import books.urls
+from userauth1.views import *
 
 urlpatterns = [
-    path('api/books/', include(books.urls)),
-    re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('api/books/', include(books.urls)),
+    path('api/protected/', protected_view, name='protected'),
+    path('api/register/', register, name='register'),
+    
+    path('api/token/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
+    # re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html')),
+] # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
