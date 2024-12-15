@@ -51,3 +51,18 @@ body {
 .trans {
     transition: 0.15s;
 }
+
+/* CSS FOR LOGIN PAGE */
+.login-box {
+    width: 500px;
+    height: 570px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #006302;
+  }
+  
+  .register-box {
+    width: 500px;
+    height: 680px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #006302;
+  }

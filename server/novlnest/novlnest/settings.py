@@ -28,6 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
 
 # Application definition
 
@@ -38,8 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Created Apps
     'userauth1',
     'books',
+    # Third Party Apps
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'djoser',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +62,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+}
 
 ROOT_URLCONF = 'novlnest.urls'
 
@@ -127,8 +150,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static' / 'client',
-    BASE_DIR / 'static' / 'client' / 'assets',
+    # BASE_DIR / 'static' / 'client',
+    # BASE_DIR / 'static' / 'client' / 'assets',
 ]
 
 # Default primary key field type
