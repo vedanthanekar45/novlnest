@@ -1,4 +1,4 @@
 
-const isAuthenticated = false;
+const isAuthenticated = !!localStorage.getItem('accessToken')
 
 export default isAuthenticated;
