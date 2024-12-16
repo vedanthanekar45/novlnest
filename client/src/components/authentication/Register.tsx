@@ -1,25 +1,37 @@
 import React from "react"
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
+    const navigate = useNavigate();
+
     const [fullName, setFullName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
+
+    const handleSubmit = async (e): Promise<void> => {
+        e.preventDefault();
         try {
-        const response = await axios.post('http://127.0.0.1:8000/api/register/', {
-            fullName,
-            email,
-            username,
-            password,
-        });
-        console.log('Registration successful:', response.data);
+            const response = await axios.post('http://127.0.0.1:8000/api/register/', {
+                fullName,
+                email,
+                username,
+                password,
+            });
+            
+            const token = response.data.token;
+            localStorage.setItem('authtoken', token)
+            if (response.status === 201 || response.status === 200) {
+                console.log('Registration successful:', response.data);
+                console.log("Token saved: ", token);
+                alert('Registration successful! Redirecting to verification...');
+                navigate('/otp', { state: { isFromRegistration: true } }); // Redirect to homepage
+              }
         } catch (error) {
-        console.error('Registration error:', error);
+            console.error('Registration error:', error);
         }
     };
 
@@ -32,7 +44,7 @@ function Register() {
     return (
         <div className="bg-[#1d1d1d]">
             <div className="h-screen flex items-center justify-center">
-                <div className="register-box flex-col items-center relative z-0 justify-center">
+                <div className="register-box text-xl flex-col items-center relative z-0 justify-center">
                     <div className="prata flex justify-center z-2 text-green-700 text-5xl mt-10">
                         <h1>Register</h1>
                     </div>

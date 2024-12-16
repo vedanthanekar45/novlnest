@@ -1,5 +1,7 @@
 // This where we'll start, where the magic will begin
 
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import Save from "../components/body/Save";
 import Navbar from "../components/navigation/Navbar";
 import Banner from "../components/homepage/Banner";
@@ -12,7 +14,42 @@ import bookcover12 from "/assets/demons.jpg"
 import bookcover21 from "/assets/ttbp.jpg"
 import bookcover22 from "/assets/1984.jpg"
 
+interface UserInfo {
+    id: number,
+    username: string,
+    email: string,
+    fullName: string,
+};
+
 export default function Homepage() {
+
+    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            const token = localStorage.getItem('authToken')
+            
+            if (!token) {
+                console.log("No token found, returning to login")
+                window.location.href = '/signin';
+                return;
+            }
+
+            try {
+                const response = await axios.get<UserInfo>('http://127.0.0.1:8000/api/user/', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                setUserInfo(response.data)
+            } catch (error: any) {
+                console.error('Error fetching data', error.reponse?.data || error.message);
+            }
+        };
+
+        fetchUserInfo();
+        console.log(userInfo);
+    })
+
     return(
             <div className="flex flex-col items-center">
                 <Banner source="/assets/gallery10.jpg"/>
