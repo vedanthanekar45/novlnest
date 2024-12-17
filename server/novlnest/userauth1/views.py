@@ -6,15 +6,19 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+from django.core.cache import cache
 import random
 import json
 from userauth1.models import *
 from .sendVerificationMail import send_verification_mail
+import logging
+
+logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
 def protected_view(request):
@@ -114,24 +118,50 @@ def login(request):
         'access': str(refresh.access_token),
         'refresh': str(refresh),
     })
-    
+
+# View to send OTP through Email
 @csrf_exempt
 def send_email_view(request):
     if request.method == 'POST':
         try:
             # Parsing JSON data from Postman
-            body_unicode = request.body.decode()
-            data = json.loads(body_unicode)
-            print(body_unicode)
+            data = json.loads(request.body)
             user_email = data.get("email")
             
             if not user_email:
                 return JsonResponse({"error": "Email is required"}, status=400)
             
             otp = random.randint(100000, 999999)
+            cache.set(user_email, otp, timeout=600)
             
             # Sending the verification email
             send_verification_mail(user_email, otp)
             return JsonResponse({"message": "OTP sent successfully"}, status=200)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+
+# View to verify the OTP from email
+class VerifyOTPView (APIView):
+    def post (self, request):
+        
+        # logging the incoming data
+        logger.info("Received data: %s", request.data)
+        
+        email = request.data.get('email')
+        otp = request.data.get('otp')
+        
+        if not email or not otp:
+            return Response({'error': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        cached_otp = cache.get(email)
+        if cached_otp is None:
+            return Response({'error': 'OTP has expired. Please request a new one.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        print("OTP:", cached_otp)
+        if cached_otp == otp:
+            user = User.objects.get(email=email)
+            user.isVerified = True
+            user.save()
+            return Response({'message': 'Verification successful'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
