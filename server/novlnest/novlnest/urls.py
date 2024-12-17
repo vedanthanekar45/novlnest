@@ -33,8 +33,11 @@ urlpatterns = [
     path('api/user/', get_user_details, name='get_user_details'),
     path('api/login/', CustomAuthToken.as_view(), name='api-login'),
     
-    # API endpoint to test whether OTP is being sent successfully or not
+    # API endpoint to send OTP to an email
     path('api/send-otp/', send_email_view, name="send-otp"),
+    
+    # API endpoint to verify OTP
+    path('api/verify-otp/', VerifyOTPView.as_view(), name='verify-otp'),
     
     path('api/token/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

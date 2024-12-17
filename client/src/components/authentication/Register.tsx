@@ -1,6 +1,20 @@
 import React from "react"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
+import LoadingDots from "../animations/LoadingDots";
+
+const sendOtp = async (email: string) => {
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/api/send-otp/', {email}, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(response.data.messsage);
+    } catch (error) {
+        console.error(error.response?.data?.error || 'Error sending OTP');
+    }
+}
 
 function Register() {
     const navigate = useNavigate();
@@ -9,8 +23,7 @@ function Register() {
     const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-
-
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const handleSubmit = async (e): Promise<void> => {
         e.preventDefault();
@@ -27,11 +40,14 @@ function Register() {
             if (response.status === 201 || response.status === 200) {
                 console.log('Registration successful:', response.data);
                 console.log("Token saved: ", token);
-                alert('Registration successful! Redirecting to verification...');
-                navigate('/otp', { state: { isFromRegistration: true } }); // Redirect to homepage
+                alert('Registration successful! Sending to One Time Password to your email and redirecting to verification...');
+                await sendOtp(email)
+                navigate('/otp', { state: { isFromRegistration: true, email } }); // Redirect to homepage
               }
         } catch (error) {
             console.error('Registration error:', error);
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -70,7 +86,11 @@ function Register() {
                             <p className="prata text-white ml-2">Show Password</p>
                         </label>
 
-                        <button className="bg-green-700 h-12 rounded-xl w-full text-white">Register</button>
+                        <button 
+                        className="bg-green-700 h-12 rounded-xl w-full text-white" 
+                        disabled={isLoading}>
+                            {isLoading ? <LoadingDots />: "Register"}
+                        </button>
                     </form>
                     <div className="prata text-white flex justify-center z-2 text-2xl mt-6">
                         <h1>Already a user? Login <a href='/signin' className="text-green-700">here!</a></h1>
