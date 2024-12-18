@@ -132,7 +132,7 @@ def send_email_view(request):
                 return JsonResponse({"error": "Email is required"}, status=400)
             
             otp = random.randint(100000, 999999)
-            cache.set(user_email, otp, timeout=600)
+            cache.set(user_email, str(otp), timeout=600)
             
             # Sending the verification email
             send_verification_mail(user_email, otp)
@@ -144,11 +144,10 @@ def send_email_view(request):
 class VerifyOTPView (APIView):
     def post (self, request):
         
-        # logging the incoming data
-        logger.info("Received data: %s", request.data)
-        
         email = request.data.get('email')
         otp = request.data.get('otp')
+        print(f"Email received for verification: {email}")
+        print(f"OTP received for verification: {otp}")
         
         if not email or not otp:
             return Response({'error': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -158,7 +157,7 @@ class VerifyOTPView (APIView):
             return Response({'error': 'OTP has expired. Please request a new one.'}, status=status.HTTP_400_BAD_REQUEST)
         
         print("OTP:", cached_otp)
-        if cached_otp == otp:
+        if str(cached_otp) == str(otp):
             user = User.objects.get(email=email)
             user.isVerified = True
             user.save()
