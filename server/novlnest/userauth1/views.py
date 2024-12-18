@@ -12,6 +12,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
+from django.contrib.auth import authenticate
 import random
 import json
 from userauth1.models import *
@@ -66,58 +67,40 @@ def get_user_details(request):
     }
     return Response(user_data)
 
-class CustomAuthToken(TokenObtainPairView):
-    """
-    Custom Authentication Token class that generates a JWT
-    on successful authentication (checks username/password).
-    """
-
-    def post(self, request, *args, **kwargs):
-        # Get username and password from the request
+class LoginView(APIView):
+    def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        # Authenticate the user
-        user = User.objects.filter(username=username).first()
-
-        if user and user.check_password(password):
-            # Generate JWT tokens using SimpleJWT
+        try:
+            user = User.objects.get(username=username)
+            if not check_password(password, user.password):
+                return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
+            
             refresh = RefreshToken.for_user(user)
-            access_token = refresh.access_token
-
-            # Return the access and refresh tokens
-            return Response({
-                'access': str(access_token),
-                'refresh': str(refresh),
-            })
-
-        # If authentication fails
-        return Response({'error': 'Invalid credentials'}, status=401)
-
-@api_view(['POST'])
-def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-
-    # Find the user by username
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
-        raise AuthenticationFailed('User not found')
-
-    # Check if the provided password matches the stored hash
-    if not check_password(password, user.password):
-        raise AuthenticationFailed('Invalid password')
-
-    # If the password is correct, proceed with token generation
-    # Generate JWT token (you can use simplejwt or your custom method)
-    from rest_framework_simplejwt.tokens import RefreshToken
-
-    refresh = RefreshToken.for_user(user)
-    return Response({
-        'access': str(refresh.access_token),
-        'refresh': str(refresh),
-    })
+            access = refresh.access_token
+            response = JsonResponse({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh)
+            }, status = status.HTTP_200_OK)
+            
+            response.set_cookie(
+                'access', str(access),
+                httponly=True,
+                secure=True,
+                samesite='Strict'
+            )
+            response.set_cookie(
+                'access', str(refresh),
+                httponly=True,
+                secure=True,
+                samesite='Strict'
+            )
+            
+            return response
+            
+        except User.DoesNotExist:
+            return Response({'error': 'Invalid email'}, status=status.HTTP_404_NOT_FOUND)
 
 # View to send OTP through Email
 @csrf_exempt
@@ -158,9 +141,36 @@ class VerifyOTPView (APIView):
         
         print("OTP:", cached_otp)
         if str(cached_otp) == str(otp):
-            user = User.objects.get(email=email)
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            
             user.isVerified = True
             user.save()
-            return Response({'message': 'Verification successful'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            refresh = RefreshToken.for_user(user)
+            access = refresh.access_token
+
+            response = JsonResponse({
+                'message': 'Verification successful',
+                'access': str(access),
+                'refresh': str(refresh)
+            }, status=status.HTTP_200_OK)
+            
+            response.set_cookie(
+                'access', str(access),
+                httponly=True,
+                secure=True,
+                samesite='Strict'
+            )
+            response.set_cookie(
+                'access', str(refresh),
+                httponly=True,
+                secure=True,
+                samesite='Strict'
+            )
+            
+            return response
+        
+        return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)

@@ -21,7 +21,7 @@ from django.urls import path, re_path, include
 from django.contrib.staticfiles.views import serve
 from django.conf import settings
 from django.conf.urls.static import static
-from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView, TokenBlacklistView)
 import books.urls
 from userauth1.views import *
 
@@ -31,7 +31,7 @@ urlpatterns = [
     path('api/protected/', protected_view, name='protected'),
     path('api/register/', register, name='register'),
     path('api/user/', get_user_details, name='get_user_details'),
-    path('api/login/', CustomAuthToken.as_view(), name='api-login'),
+    path('api/login/', LoginView.as_view(), name='api-login'),
     
     # API endpoint to send OTP to an email
     path('api/send-otp/', send_email_view, name="send-otp"),
@@ -41,6 +41,7 @@ urlpatterns = [
     
     path('api/token/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist')
     
     # re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html')),
 ] # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

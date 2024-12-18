@@ -90,16 +90,14 @@ CACHES = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=45),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
-    'AUDIENCE': None,
-    'ISSUER': None,
-    'JWK_URL': None,
+    'AUTH_COOKIE': 'refresh_token',    
+    'AUTH_COOKIE_SECURE': True,           
+    'AUTH_COOKIE_HTTP_ONLY': True, 
+    'AUTH_COOKIE_SAMESITE': 'Lax',
 }
 
 DJOSER = {

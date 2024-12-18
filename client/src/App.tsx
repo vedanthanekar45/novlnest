@@ -4,8 +4,8 @@ import Register from './components/authentication/Register'
 import GenrePage from './pages/genres'
 import Homepage from './pages/homepage'
 import {Routes, Route} from "react-router-dom"
-import isAuthenticated from './auth/checkTokenValidity'
-import { Navigate } from 'react-router-dom';
+// import isAuthenticated from './auth/checkTokenValidity'
+// import { Navigate } from 'react-router-dom';
 import Otpverify from './components/authentication/OtpVerify'
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/genre' element={<GenrePage />} />
-        <Route path='/signin' element={isAuthenticated ? <Navigate to='/'/> : <Login/>} />
-        <Route path='/signup' element={isAuthenticated ? <Navigate to='/'/> : <Register />} />
+        <Route path='/signin' element={<Login/>} />
+        <Route path='/signup' element={<Register />} />
         <Route path='/otp'  element={<Otpverify />} />
       </Routes>
       {/* <Homepage /> */}

@@ -23,32 +23,32 @@ interface UserInfo {
 
 export default function Homepage() {
 
-    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-    useEffect(() => {
-        const fetchUserInfo = async () => {
-            const token = localStorage.getItem('authToken')
+    // const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+    // useEffect(() => {
+    //     const fetchUserInfo = async () => {
+    //         const token = localStorage.getItem('authToken')
             
-            if (!token) {
-                console.log("No token found, returning to login")
-                window.location.href = '/signin';
-                return;
-            }
+    //         if (!token) {
+    //             console.log("No token found, returning to login")
+    //             window.location.href = '/signin';
+    //             return;
+    //         }
 
-            try {
-                const response = await axios.get<UserInfo>('http://127.0.0.1:8000/api/user/', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                });
-                setUserInfo(response.data)
-            } catch (error: any) {
-                console.error('Error fetching data', error.reponse?.data || error.message);
-            }
-        };
+    //         try {
+    //             const response = await axios.get<UserInfo>('http://127.0.0.1:8000/api/user/', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`
+    //                 },
+    //             });
+    //             setUserInfo(response.data)
+    //         } catch (error: any) {
+    //             console.error('Error fetching data', error.reponse?.data || error.message);
+    //         }
+    //     };
 
-        fetchUserInfo();
-        console.log(userInfo);
-    })
+    //     fetchUserInfo();
+    //     console.log(userInfo);
+    // })
 
     return(
             <div className="flex flex-col items-center">
