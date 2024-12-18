@@ -27,6 +27,7 @@ function Register() {
 
     const handleSubmit = async (e): Promise<void> => {
         e.preventDefault();
+        setIsLoading(true)
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/register/', {
                 fullName,
@@ -34,6 +35,17 @@ function Register() {
                 username,
                 password,
             });
+
+            // const loginResponse = await axios.post("http://127.0.0.1:8000/api/login/", {
+            //     username: username,
+            //     password: password
+            // }, {
+            //     withCredentials: true,
+            // });
+
+            // if (loginResponse.status == 200) {
+            //     navigate('/');
+            // }
             
             const token = response.data.token;
             localStorage.setItem('authtoken', token)
