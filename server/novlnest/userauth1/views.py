@@ -52,7 +52,6 @@ def register(request):
         
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_details(request):
@@ -81,19 +80,6 @@ class LoginView(APIView):
                 'access': str(refresh.access_token),
                 'refresh': str(refresh)
             }, status = status.HTTP_200_OK)
-            
-            response.set_cookie(
-                'access', str(access),
-                httponly=True,
-                secure=True,
-                samesite='Strict'
-            )
-            response.set_cookie(
-                'access', str(refresh),
-                httponly=True,
-                secure=True,
-                samesite='Strict'
-            )
             
             return response
             
