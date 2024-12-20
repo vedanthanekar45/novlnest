@@ -1,38 +1,15 @@
 import React from "react"
-import axios from "axios";
-import { useNavigate } from 'react-router-dom'
+import { useAuth } from "../../auth/authContext";
 
 function Login() {
 
-    const navigate = useNavigate();
-
+    const { login, notLoggedIn } = useAuth();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [notLoggedIn, setNotLoggedIn] = React.useState(false)
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-                username,
-                password,
-            }, {
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-                }
-            });
-            const { access, refresh } = response.data;
-            localStorage.setItem('accessToken', access);
-            localStorage.setItem('refreshToken', refresh);
-            console.log('Login successful');
-
-            // After successful login, redirect to homepage
-            navigate('/')
-        } catch (error) {
-            console.error('Login failed:', error);
-            setNotLoggedIn(true);
-        }
+        await login(username, password)
     };
 
       // Password Show or Hide
@@ -67,10 +44,10 @@ function Login() {
 
                         <button className="bg-green-700 h-12 rounded-xl mt-2 w-full text-white">Login</button>
                     </form>
-                    {notLoggedIn ? 
+                    {notLoggedIn ? <></> :
                         <div className="prata flex justify-center z-2 text-red-600 text-xl mt-6">
                             <h1>Invalid Login Credentials!</h1>
-                        </div> : <></>}
+                        </div>}
                     <div className="prata text-white flex justify-center z-2 text-2xl mt-6">
                         <h1>Not a user yet? Register <a href='/signup' className="text-green-700">here!</a></h1>
                     </div>

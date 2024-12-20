@@ -21,6 +21,10 @@ export default function Otpverify() {
             const response = await axios.post('http://127.0.0.1:8000/api/verify-otp/', {email, otp,})
             if (response.status == 200) {
                 console.log("OTP verified successfully");
+                const { access, refresh} = response.data;
+                localStorage.setItem('accessToken', access);
+                localStorage.setItem('refreshToken', refresh);
+                
                 toast.success("OTP Verified Successfully! Redirecting to homepage..")
                 navigate("/");
             }
@@ -40,6 +44,7 @@ export default function Otpverify() {
                 }
             });
             console.log(response.data.messsage);
+            alert("OTP Sent")
         } catch (error) {
             console.error(error.response?.data?.error || 'Error sending OTP');
         }
