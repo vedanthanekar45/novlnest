@@ -14,6 +14,7 @@ interface AuthContextType {
     notLoggedIn: boolean | null;
     login: (username: string, password: string) => Promise<void>;
     logout: () => void;
+    setNotLoggedIn: (value: boolean) => void;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -29,11 +30,6 @@ export const AuthProvider = ({ children } : { children: ReactNode }) => {
             const response = await axios.post('http://127.0.0.1:8000/api/login/', {
                 username,
                 password,
-            }, {
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-                }
             });
             const { access, refresh } = response.data;
             localStorage.setItem('accessToken', access);
@@ -46,7 +42,7 @@ export const AuthProvider = ({ children } : { children: ReactNode }) => {
             console.error('Login failed:', error);
         }
     };
-
+    
     const logout = () => {
         setUser(null)
         setAccessToken(null)
@@ -76,10 +72,10 @@ export const AuthProvider = ({ children } : { children: ReactNode }) => {
             
             return () => clearInterval(refreshInterval);
         }
-    })
+    }, [accesstoken])
 
     return (
-        <AuthContext.Provider value={{ user, accesstoken, notLoggedIn, login, logout}}>
+        <AuthContext.Provider value={{ user, accesstoken, notLoggedIn, login, logout, setNotLoggedIn}}>
             {children}
         </AuthContext.Provider>
     );

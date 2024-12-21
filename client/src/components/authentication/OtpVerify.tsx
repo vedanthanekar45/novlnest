@@ -1,12 +1,14 @@
 import React from "react"
 import axios from "axios"
-import { useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LoadingDots from "../animations/LoadingDots";
-import toast from "react-hot-toast";
+import { useAuth } from "../../auth/authContext";
+import { toast } from "react-hot-toast";
 
 export default function Otpverify() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { setNotLoggedIn } = useAuth();
 
     // Lets highlight this.. This is how you send data between pages
     const location = useLocation()
@@ -18,21 +20,30 @@ export default function Otpverify() {
         e.preventDefault()
         setIsLoading(true)
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/verify-otp/', {email, otp,})
+            const response = await axios.post('http://127.0.0.1:8000/api/verify-otp/', {email, otp}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             if (response.status == 200) {
                 console.log("OTP verified successfully");
                 const { access, refresh} = response.data;
                 localStorage.setItem('accessToken', access);
                 localStorage.setItem('refreshToken', refresh);
-                
                 toast.success("OTP Verified Successfully! Redirecting to homepage..")
+                setNotLoggedIn(false);
                 navigate("/");
             }
         } catch (error) {
-            console.error("OTP verification failed:", error.response?.data || error.message);
-            alert("Invalid OTP or verification failed.");
+            if (axios.isAxiosError(error)) {
+                console.error(error.response?.data || error.message);
+                alert("Invalid OTP or verification failed.");
+            } else {
+                console.log(error);
+                alert("An unexpected error occurred.");
+            }
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }
 
