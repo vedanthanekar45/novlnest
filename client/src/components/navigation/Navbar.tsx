@@ -35,7 +35,7 @@ export default function Navbar({className}: ClassNameProp) {
                 <a href="#"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
                 ml-16 mt-[30px] text-[17px] trans" text="Journal" /></a>
                 {
-                    notLoggedIn ? (<a></a>) : (<a href='#' onClick={logout}><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
+                    notLoggedIn ? (<></>) : (<a href='#' onClick={logout}><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
                         ml-16 mt-[30px] text-[17px] trans" text="Logout"/></a>)
                 }
                 <SearchBar className={`rounded-full text-[15px] ml-14 relative 
